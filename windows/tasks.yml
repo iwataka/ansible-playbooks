@@ -1,0 +1,30 @@
+- name: set timezone
+  win_timezone:
+    timezone: Tokyo Standard Time
+
+- name: add user
+  win_user:
+    name: "{{ user_name }}"
+    password: "{{ user_password }}"
+    groups: ["Administrators"]
+
+- name: set language properties
+  script: scripts/setlang.ps1
+
+- name: disable Internet Explore Enhanced Security Configuration
+  script: scripts/disable_ieesc.ps1
+
+- name: install git
+  win_chocolatey:
+    name: git
+
+- name: install Google Chrome
+  win_chocolatey:
+    name: googlechrome
+
+- name: set PATH
+  script: scripts/setpath.ps1
+
+- name: restart computer
+  win_reboot:
+    pre_reboot_delay_sec: 0
